@@ -1,6 +1,8 @@
 package com.rellaxi.piglauncher;
 
 import com.mojang.logging.LogUtils;
+import com.rellaxi.piglauncher.item.ModItemProperties;
+import com.rellaxi.piglauncher.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -50,7 +52,10 @@ public class PigLauncher {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ModItemProperties.addCustomItemProperties();
 
+            });
         }
     }
 }

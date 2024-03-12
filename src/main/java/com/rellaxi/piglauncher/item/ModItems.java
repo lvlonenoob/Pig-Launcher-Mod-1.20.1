@@ -1,5 +1,7 @@
-package com.rellaxi.piglauncher;
+package com.rellaxi.piglauncher.item;
 
+import com.rellaxi.piglauncher.PigLauncher;
+import com.rellaxi.piglauncher.item.custom.PigLauncherItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -11,7 +13,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, PigLauncher.MOD_ID);
 
     public static final RegistryObject<Item> PIGLAUNCHER = ITEMS.register("piglauncher",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new PigLauncherItem(new Item.Properties().stacksTo(1)));
 
 
     public static void register(IEventBus eventBus) {

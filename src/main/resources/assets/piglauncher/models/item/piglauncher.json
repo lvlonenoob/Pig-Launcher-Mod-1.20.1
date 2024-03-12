@@ -2,5 +2,13 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "minecraft:item/bow"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "piglauncher:loaded": 1
+      },
+      "model": "piglauncher:item/piglauncher_loaded"
+    }
+  ]
 }
