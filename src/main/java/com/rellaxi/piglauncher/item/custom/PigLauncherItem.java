@@ -18,29 +18,14 @@ import net.minecraft.world.level.Level;
 
 public class PigLauncherItem extends Item {
     private boolean loaded;
-    private int ticker;
     public PigLauncherItem(Properties pProperties) {
         super(pProperties);
         loaded = false;
-        ticker = 0;
-    }
-
-    @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (loaded) {
-            if (ticker > 0) {
-                ticker--;
-            }
-        }
-        else {
-            ticker = 20;
-        }
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        if (ticker == 0) {
+        if (!pLevel.isClientSide()) {
             if (loaded) {
                 ArrowItem arrowitem = (ArrowItem) (Items.ARROW);
                 AbstractArrow abstractarrow = arrowitem.createArrow(pLevel, new ItemStack(Items.ARROW), pPlayer);
@@ -48,6 +33,7 @@ public class PigLauncherItem extends Item {
                 abstractarrow.pickup = AbstractArrow.Pickup.DISALLOWED;
                 pLevel.addFreshEntity(abstractarrow);
                 loaded = false;
+                pPlayer.getCooldowns().addCooldown(this, 10);
                 toTag(pPlayer.getItemInHand(pUsedHand), loaded);
             }
         }
@@ -60,6 +46,7 @@ public class PigLauncherItem extends Item {
             if (pInteractionTarget.getType() == EntityType.PIG) {
                 pInteractionTarget.discard();
                 loaded = true;
+                pPlayer.getCooldowns().addCooldown(this, 20);
                 toTag(pPlayer.getItemInHand(pUsedHand), loaded);
             }
         }
